@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "sistema.h"
 
-int blocoVazio (caches *cache, selecionaMemoria cacheVigia) { //responsável por procurar blocos vazios
-
+ //responsável por procurar blocos vazios
+int blocoVazio (caches *cache, selecionaMemoria cacheVigia) {
     int i;
     switch (cacheVigia) {
         case L1:    
@@ -24,10 +24,11 @@ int blocoVazio (caches *cache, selecionaMemoria cacheVigia) { //responsável por
 	return -1;
 
 }
+
 memoriaBloco* memoryMove (RAM *ram, caches *cache, int blocoEndereco, selecionaMemoria begins) {
     if (begins == L1) {
         change_lru(cache, L1, blocoEndereco);
-        printf("Movendo para o registrador\n");
+        //printf("Movendo para o registrador\n");
         return &cache->cachel1[blocoEndereco]; 
     }
 
@@ -36,7 +37,7 @@ memoriaBloco* memoryMove (RAM *ram, caches *cache, int blocoEndereco, selecionaM
         if (bloco != -1) {
             cache->cachel1[bloco] = cache->cachel2[blocoEndereco];
             cache->cachel2[blocoEndereco].blocoEndereco = -1;
-            printf("Movendo para L1\n");
+            //printf("Movendo L1\n");
             memoryMove(ram, cache, bloco, L1);
         }else {
             memoriaBloco tmp = cache->cachel1[cache->cacheUsadol1[0]];
@@ -55,7 +56,7 @@ memoriaBloco* memoryMove (RAM *ram, caches *cache, int blocoEndereco, selecionaM
         if (bloco != -1) {
             cache->cachel2[bloco] = cache->cachel3[blocoEndereco];
             cache->cachel3[blocoEndereco].blocoEndereco = -1;
-            printf("Movendo para L2\n");
+            //printf("Movendo L2\n");
             memoryMove(ram, cache, bloco, L2);
         }else {
             memoriaBloco tmp = cache->cachel2[cache->cacheUsadol2[0]];
@@ -71,7 +72,7 @@ memoriaBloco* memoryMove (RAM *ram, caches *cache, int blocoEndereco, selecionaM
         int bloco = blocoVazio(cache,L3);
         if (bloco != -1) {
             cache->cachel3[bloco] = ram->blocks[blocoEndereco];
-            printf("Movendo para L3\n");
+            //printf("Movendo L3\n");
             memoryMove(ram, cache, bloco, L3);
         }
         else {
@@ -133,6 +134,7 @@ int encontraMemoria(RAM *ram, caches *cache, endereco e, selecionaMemoria choice
     }
     return -1;
 }
+
 memoriaBloco* memoryGet (RAM *ram, endereco e, caches *cache) {
 	selecionaMemoria onde_procurar[] = {L1, L2, L3, RAM_MEMORY, MISS};
     selecionaMemoria memoria_encontrada;
@@ -142,27 +144,25 @@ memoriaBloco* memoryGet (RAM *ram, endereco e, caches *cache) {
 
 	do {
 		end_memoria = encontraMemoria(ram, cache, e, onde_procurar[i++]);
-
 	} while(end_memoria == -1 && onde_procurar[i] != MISS);
 
 	memoria_encontrada = onde_procurar[i-1];
-
-
+    
     switch (memoria_encontrada) {
         case L1:
-            printf("Estou em l1!\n");
+            //printf("l1\n");
             return memoryMove(ram, cache, end_memoria, L1);
             break;
         case L2:
-            printf("Estou em l2!\n");
+            //printf("l2\n");
                 return memoryMove(ram, cache, end_memoria, L2);
                 break;
         case L3:
-            printf("Estou rm l3!\n");
+            //printf("l3\n");
                 return memoryMove(ram, cache, end_memoria, L3);
                 break;
         case RAM_MEMORY:   
-            printf("Estou rm ram!\n");
+            //printf("rm ram\n");
             return memoryMove(ram, cache, end_memoria, RAM_MEMORY );
             break;
         default:

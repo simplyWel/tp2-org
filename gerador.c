@@ -3,8 +3,6 @@
 #include <time.h>
 #include "sistema.h"
 
-
-
 int rep[5][7]; // Instruções que podem se repetir
 
 void instGenerator() {
@@ -51,5 +49,4 @@ void instGenerator() {
     fprintf(arquivo, "-1:0:0:0:0:0:0\n");
 
     fclose(arquivo);
-
 }

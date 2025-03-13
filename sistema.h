@@ -8,7 +8,7 @@
 #define L1_MAX 10
 #define L2_MAX 20
 #define L3_MAX 30
-#define N_INST 10 // Número de instruções
+#define N_INST 20 // Número de instruções
 #define N_FOR 5      // Número de instruções que vão se repetir
 #define N_MEM 1000   // Número da memória para endereço do bloco
 #define N_PROB 50    // Probabilidade de repetição
@@ -64,7 +64,7 @@ typedef struct {
 
 
 void iniciar_cache(caches *cache);
-void imprimir_cache(caches *cache, selecionaMemoria memory);
+// void imprimir_cache(caches *cache, selecionaMemoria memory);
 void change_lru(caches *cache, selecionaMemoria memory, int indice);
 
 

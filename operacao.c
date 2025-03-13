@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 void iniciar(instrucao_str *programa, cpu *processor, RAM *RAM, caches *cache, int total_instrucoes) {
     processor->programa = programa;
     processor->PC = 0;
@@ -30,29 +29,32 @@ void iniciar(instrucao_str *programa, cpu *processor, RAM *RAM, caches *cache, i
                 processor->reg3->palavras[inst->addr3.endpalavra] = processor->reg1->palavras[inst->addr1.endpalavra] + processor->reg2->palavras[inst->addr2.endpalavra];
                 processor->reg3->modificado = 1;
 
-                printf("Inst sum -> RAM posicao %d com conteudo na cache 1 %d\n", inst->addr3.endpalavra, processor->reg3->palavras[inst->addr3.endpalavra]);
-                printf("Custo até o momento: %d\n", cache->custo);
-                printf("Até o momento HITS C1: %d MISSES C1: %d\n", cache->cacheHitl1, cache->cacheMissl1);
-                printf("Até o momento HITS C2: %d MISSES C2: %d\n", cache->cacheHitl2, cache->cacheMissl2);
-                printf("Até o momento HITS C3: %d MISSES C3: %d\n", cache->cacheHitl3, cache->cacheMissl3);
+                // printf("Inst sum -> RAM posicao %d com conteudo na cache 1 %d\n", inst->addr3.endpalavra, processor->reg3->palavras[inst->addr3.endpalavra]);
+                // printf("Custo até o momento: %d\n", cache->custo);
+                // printf("Até o momento HITS C1: %d MISSES C1: %d\n", cache->cacheHitl1, cache->cacheMissl1);
+                // printf("Até o momento HITS C2: %d MISSES C2: %d\n", cache->cacheHitl2, cache->cacheMissl2);
+                // printf("Até o momento HITS C3: %d MISSES C3: %d\n\n", cache->cacheHitl3, cache->cacheMissl3);
                 break;
 
             case SUBTRAI: // SUBTRAI
                 processor->reg3->palavras[inst->addr3.endpalavra] = processor->reg1->palavras[inst->addr1.endpalavra] - processor->reg2->palavras[inst->addr2.endpalavra];
                 processor->reg3->modificado = 1;
 
-                printf("Inst sub -> RAM posicao %d com conteudo na cache 1 %d\n", inst->addr3.endpalavra, processor->reg3->palavras[inst->addr3.endpalavra]);
-                printf("Custo até o momento: %d\n", cache->custo);
-                printf("Até o momento HITS C1: %d MISSES C1: %d\n", cache->cacheHitl1, cache->cacheMissl1);
-                printf("Até o momento HITS C2: %d MISSES C2: %d\n", cache->cacheHitl2, cache->cacheMissl2);
-                printf("Até o momento HITS C3: %d MISSES C3: %d\n", cache->cacheHitl3, cache->cacheMissl3);
+                // printf("Inst sub -> RAM posicao %d com conteudo na cache 1 %d\n", inst->addr3.endpalavra, processor->reg3->palavras[inst->addr3.endpalavra]);
+                // printf("Custo até o momento: %d\n", cache->custo);
+                // printf("Até o momento HITS C1: %d MISSES C1: %d\n", cache->cacheHitl1, cache->cacheMissl1);
+                // printf("Até o momento HITS C2: %d MISSES C2: %d\n", cache->cacheHitl2, cache->cacheMissl2);
+                // printf("Até o momento HITS C3: %d MISSES C3: %d\n\n", cache->cacheHitl3, cache->cacheMissl3);
                 break;
 
             default:
                 printf("Instrução desconhecida: %d\n", processor->opcode);
                 break;
         }
-
         processor->PC += 1; // Avançar para a próxima instrução
     }
+    printf("Custo total: %d\n", cache->custo);
+    printf("HITS C1: %d MISSES C1: %d\n", cache->cacheHitl1, cache->cacheMissl1);
+    printf("HITS C2: %d MISSES C2: %d\n", cache->cacheHitl2, cache->cacheMissl2);
+    printf("HITS C3: %d MISSES C3: %d\n\n", cache->cacheHitl3, cache->cacheMissl3);
 }

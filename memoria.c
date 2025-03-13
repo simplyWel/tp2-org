@@ -13,17 +13,16 @@ RAM * ramAloca (int size){
 	return ram;
 }
 
-RAM* ramRealoca (RAM* ram, int new_size){
-	ram->size = new_size;
-	ram->blocks= realloc(ram->blocks, new_size * sizeof(memoriaBloco));
+// RAM* ramRealoca (RAM* ram, int new_size){
+// 	ram->size = new_size;
+// 	ram->blocks= realloc(ram->blocks, new_size * sizeof(memoriaBloco));
 
-	return ram;
-}
+// 	return ram;
+// }
 
 RAM* ramLibera(RAM *ram) {
 	free(ram->blocks);
 	free(ram);
-
 	return NULL;
 }
 
@@ -46,13 +45,13 @@ void sorteiaRam (RAM *ram){
 	}
 }
 
-void insereDado (RAM *ram, int addr, memoriaBloco conteudo){
-	ram->blocks[addr] = conteudo;
-}
+// void insereDado (RAM *ram, int addr, memoriaBloco conteudo){
+// 	ram->blocks[addr] = conteudo;
+// }
 
-memoriaBloco writeDado (RAM *ram, int addr){
-	return ram->blocks[addr];
-}
+// memoriaBloco writeDado (RAM *ram, int addr){
+// 	return ram->blocks[addr];
+// }
 
 void imprimir (RAM *ram){
 	for (int i = 0; i < ram->size; ++i) {
