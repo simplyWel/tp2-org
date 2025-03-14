@@ -6,7 +6,7 @@
 int rep[5][7]; // Instruções que podem se repetir
 
 void instGenerator() {
-    FILE *arquivo = fopen("instructions.txt", "w");
+    FILE *arquivo = fopen("instructions2.txt", "w");
     int random;
     int instruc[8] = {6, 6, 6, 6, 6, 6, 6, 6}; // Número de campos por opcode
     srand(time(NULL));
@@ -16,7 +16,8 @@ void instGenerator() {
         random = rand() % N_OPCODE; // Opcode será 0 (SOMA) ou 1 (SUBTRAI)
         rep[i][0] = random;
         for (int j = 1; j <= (instruc[random]); j += 2) {
-            rep[i][j] = rand() % N_MEM;   // Endereço de bloco aleatório
+            // Garantir que os endereços de bloco sejam mais distribuídos
+            rep[i][j] = (i * 10 + j) % N_MEM; // Endereço de bloco mais distribuído
             rep[i][j + 1] = rand() % N_WORD; // Endereço de palavra aleatório
         }
     }
@@ -38,7 +39,10 @@ void instGenerator() {
             random = rand() % N_OPCODE; // Opcode será 0 (SOMA) ou 1 (SUBTRAI)
             fprintf(arquivo, "%d:", random);
             for (int j = 1; j <= instruc[random]; j += 2) {
-                fprintf(arquivo, "%d:%d:", rand() % N_MEM, rand() % N_WORD);
+                // Garantir que os endereços de bloco sejam mais distribuídos
+                int bloco = (i * 10 + j) % N_MEM; // Endereço de bloco mais distribuído
+                int palavra = rand() % N_WORD; // Endereço de palavra aleatório
+                fprintf(arquivo, "%d:%d:", bloco, palavra);
             }
             fprintf(arquivo, "\n");
             i++;

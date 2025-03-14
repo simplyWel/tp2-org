@@ -1,5 +1,6 @@
 #ifndef SISTEMA_H
 #define SISTEMA_H
+
 #define MAX_PALAVRAS 4
 #define HALT -1
 #define SOMA 0
@@ -8,7 +9,7 @@
 #define L1_MAX 10
 #define L2_MAX 20
 #define L3_MAX 30
-#define N_INST 20 // Número de instruções
+#define N_INST 100 // Número de instruções
 #define N_FOR 5      // Número de instruções que vão se repetir
 #define N_MEM 1000   // Número da memória para endereço do bloco
 #define N_PROB 50    // Probabilidade de repetição
@@ -24,6 +25,7 @@ typedef struct {
 typedef struct {
     memoriaBloco *blocks;
     int size;
+
 } RAM;
 
 typedef enum {
@@ -32,6 +34,7 @@ typedef enum {
     L3,
     RAM_MEMORY,
     MISS
+
 } selecionaMemoria;
 
 typedef struct {
@@ -44,15 +47,18 @@ typedef struct {
     endereco addr2;
     endereco addr3;
     int opcode;
+
 } instrucao_str;
 
 typedef struct {
     memoriaBloco *reg1, *reg2, *reg3;
     int PC;
+    
     instrucao_str *programa;
     int opcode;
-} cpu;
 
+
+} cpu;
 
 typedef struct {
     memoriaBloco cachel1[L1_MAX]; int cacheUsadol1[L1_MAX]; int cacheHitl1; int cacheMissl1;
@@ -61,29 +67,20 @@ typedef struct {
     int custo;
 } caches; 
 
-
-
 void iniciar_cache(caches *cache);
-// void imprimir_cache(caches *cache, selecionaMemoria memory);
 void change_lru(caches *cache, selecionaMemoria memory, int indice);
 
-
 void iniciar(instrucao_str *programa, cpu *processor, RAM *RAM, caches *cache, int total_instrucoes);
-
 
 int blocoVazio (caches *cache, selecionaMemoria cache_looking);
 memoriaBloco *memoryMove (RAM *ram, caches *cache, int blocoEndereco, selecionaMemoria begins);
 int encontraMemoria(RAM *ram, caches *cache, endereco e, selecionaMemoria choice);
 memoriaBloco *memoryGet (RAM *ram, endereco e, caches *cache);
 
-
 RAM* ramAloca (int tam);
-RAM* ramRealoca (RAM* ram, int new_tam);
 RAM* ramLibera(RAM *ram);
 void ramEhvazia (RAM *ram);
 void sorteiaRam (RAM *ram);
-void insereDado (RAM *ram, int addr, memoriaBloco conteudo);
-memoriaBloco writeDado (RAM *ram, int addr);
 void imprimir (RAM *ram);
 instrucao_str* lerInstrucoes(const char* arquivo, int* total_instrucoes);
 void instGenerator();

@@ -15,7 +15,7 @@ int main(void) {
 
     // Ler instruções do arquivo
     int total_instrucoes;
-    instrucao_str* instrucoes = lerInstrucoes("instructions.txt", &total_instrucoes);
+    instrucao_str* instrucoes = lerInstrucoes("instructions2.txt", &total_instrucoes);
     if (!instrucoes) {
         printf("Erro ao ler instruções.\n");
         return 1;
@@ -44,8 +44,7 @@ instrucao_str* lerInstrucoes(const char* arquivo, int* total_instrucoes) {
     int count = 0;
     char ch;
     while ((ch = fgetc(f)) != EOF) {
-        if (ch == '\n') 
-            count++;
+        if (ch == '\n') count++;
     }
     rewind(f); // Voltar ao início do arquivo
 
